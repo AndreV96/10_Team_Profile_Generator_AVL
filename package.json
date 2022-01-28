@@ -1,0 +1,6 @@
+{
+  "devDependencies":{
+    "inquirer":"^8.2.0",
+    "jest":"^27.4.7"
+  }
+}
