@@ -7,47 +7,113 @@
 
 const inquirer = require("inquirer");
 const fs = require("fs");
-const { choices } = require("yargs");
 
-const question = [
+const allData = []
+
+//Questions arrays
+const basicQuestions = [
   {
     type: "input",
-    name: "managerName",
-    message: "What is your team manager’s name?",
+    name: "name",
+    message: "What is his/her name?",
   },
   {
     type: "input",
-    name: "managerId",
-    message: "What is your team manager’s ID?",
+    name: "id",
+    message: "What is his/her ID?",
   },
   {
     type: "input",
-    name: "managerEmail",
-    message: "What is your team manager’s email?",
-  },
-  {
-    type: "input",
-    name: "managerOffice",
-    message: "What is your team manager’s office?",
+    name: "email",
+    message: "What is his/her email?",
   },
   {
     type: "list",
     name: "options",
-    message: "Choose one of the following options",
+    message: "Choose the next team member to input his/her information, or finnish and generate your team profile cards",
     choices: [
-      "Add an engineer to your team",
-      "Add a intern to your team",
-      "Finish building your team",
+      "Engineer",
+      "Intern",
+      "finish, and generate profile cards",
     ],
   },
+];
+const managerQuestions = [
+  {
+    type: "input",
+    name: "managerOffice",
+    message: "What is your team manager’s office number?",
+  }
+]
+const engineerQuestions = [
   {
     type: "input",
     name: "enginnerGithub",
     message: "What is your engineer’s GitHub username?",
-  },
+  }
+]
+const internQuestions = [
   {
     type: "input",
     name: "internSchool",
     message: "What is your intern’s school?",
-  },
-];
+  }
+]
+
+//Prompt questions functions
+async function promptManagerQuestions() {
+  try {
+    console.log("Welcome, and please answer the following questions so we can generate your team member's profile cards.")
+    console.log("Please input your team manager's information")
+    const response = await inquirer.prompt([...basicQuestions, ...managerQuestions])
+    storeInputAnswers(response)
+    sendToNextQuestion(response.options)
+  }
+  catch (err) {
+    console.log(err);
+  }
+}
+async function promptEngineerQuestions() {
+  try {
+    console.log("Please input your engineer's information")
+    const response = await inquirer.prompt([...basicQuestions, ...engineerQuestions ])
+    storeInputAnswers(response)
+    sendToNextQuestion(response.options)
+  }
+  catch (err) {
+    console.log(err);
+  }
+}
+async function promptInternQuestions() {
+  try {
+    console.log("Please input your team manager's information")
+    const response = await inquirer.prompt([...basicQuestions, ...internQuestions ])
+    storeInputAnswers(response)
+    sendToNextQuestion(response.options)
+  }
+  catch (err) {
+    console.log(err);
+  }
+}
+
+//Traverse through different and response data storage functions
+function sendToNextQuestion(options) {
+  if (options === "Engineer") promptEngineerQuestions();
+  if (options === "Intern") promptInternQuestions();
+  if (options === "finish, and generate profile cards") generateCards();
+  
+}
+function storeInputAnswers(data) {
+  allData.push(data)
+}
+//Generate cards html
+function generateCards() { //Maybe this goes in a  new file?
+  console.log(allData)
+} 
+
+//Initialize Index.js function
+function init() {
+  promptManagerQuestions()
+}
+
+init();
