@@ -1,3 +1,7 @@
+const Manager = require('./lib/manager.js')
+const Engineer = require('./lib/engineer.js')
+const Intern = require('./lib/intern.js')
+const generateHtml = require('./utils/generatehtml.js')
 //TODO Make classes for employee and for each role that extend employee
 //TODO MAke tests for each method?
 //TODO Make inquirer questions to the user
@@ -41,21 +45,21 @@ const basicQuestions = [
 const managerQuestions = [
   {
     type: "input",
-    name: "managerOffice",
+    name: "office",
     message: "What is your team manager’s office number?",
   }
 ]
 const engineerQuestions = [
   {
     type: "input",
-    name: "enginnerGithub",
+    name: "github",
     message: "What is your engineer’s GitHub username?",
   }
 ]
 const internQuestions = [
   {
     type: "input",
-    name: "internSchool",
+    name: "school",
     message: "What is your intern’s school?",
   }
 ]
@@ -65,8 +69,9 @@ async function promptManagerQuestions() {
   try {
     console.log("Welcome, and please answer the following questions so we can generate your team member's profile cards.")
     console.log("Please input your team manager's information")
-    const response = await inquirer.prompt([...basicQuestions, ...managerQuestions])
-    storeInputAnswers(response)
+    const response = await inquirer.prompt([...managerQuestions, ...basicQuestions ])
+    const manager = new Manager (response);
+    storeInputAnswers(manager)
     sendToNextQuestion(response.options)
   }
   catch (err) {
@@ -76,8 +81,9 @@ async function promptManagerQuestions() {
 async function promptEngineerQuestions() {
   try {
     console.log("Please input your engineer's information")
-    const response = await inquirer.prompt([...basicQuestions, ...engineerQuestions ])
-    storeInputAnswers(response)
+    const response = await inquirer.prompt([...engineerQuestions, ...basicQuestions ])
+    const engineer = new Engineer (response);
+    storeInputAnswers(engineer)
     sendToNextQuestion(response.options)
   }
   catch (err) {
@@ -87,8 +93,9 @@ async function promptEngineerQuestions() {
 async function promptInternQuestions() {
   try {
     console.log("Please input your team manager's information")
-    const response = await inquirer.prompt([...basicQuestions, ...internQuestions ])
-    storeInputAnswers(response)
+    const response = await inquirer.prompt([...internQuestions, ...basicQuestions ])
+    const intern = new Intern (response);
+    storeInputAnswers(intern)
     sendToNextQuestion(response.options)
   }
   catch (err) {
@@ -100,15 +107,15 @@ async function promptInternQuestions() {
 function sendToNextQuestion(options) {
   if (options === "Engineer") promptEngineerQuestions();
   if (options === "Intern") promptInternQuestions();
-  if (options === "finish, and generate profile cards") generateCards();
+  if (options === "finish, and generate profile cards") writeIndexFile();
   
 }
 function storeInputAnswers(data) {
   allData.push(data)
 }
 //Generate cards html
-function generateCards() { //Maybe this goes in a  new file?
-  console.log(allData)
+function writeIndexFile() { 
+  fs.writeFileSync("./dist/index.html", generateHtml(allData))
 } 
 
 //Initialize Index.js function
