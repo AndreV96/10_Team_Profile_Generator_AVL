@@ -1,5 +1,5 @@
 function createManager(data) {
-  const managerData = data.filter(manager => ("Manager" === manager.getRole()))
+  const managerData = data.filter((manager) => "Manager" === manager.getRole());
   return `
       <div class="shadow-2xl bg-gray-200">
         <div class="p-4 bg-blue-500 text-white text-2xl px-8">
@@ -13,13 +13,15 @@ function createManager(data) {
           <li class="p-4 py-2 border-b-2 border-gray-300">Office Number: ${managerData[0].getOffice()}</li>
         </ul>
       </div>    
-  `
+  `;
 }
 // COTINUE ADDING ICONS FOR ENGINEER AND INTERN AND IN GENERAL FINISH ALL HTML AND CSS CODE
 function createEngineer(data) {
-  const engineerData = data.filter(engineer => ("Engineer" === engineer.getRole()))
-  const allEngineersData = []
-  engineerData.forEach(engineer => {
+  const engineerData = data.filter(
+    (engineer) => "Engineer" === engineer.getRole()
+  );
+  const allEngineersData = [];
+  engineerData.forEach((engineer) => {
     const html = `
       <div class=" shadow-2xl bg-gray-200">
         <div class="p-4 bg-blue-500 text-white text-2xl px-8">
@@ -33,16 +35,16 @@ function createEngineer(data) {
           <li class="p-4 py-2 border-b-2 border-gray-300">GitHub: <a class=" text-blue-700 text-bold pointer" href="https://github.com/${engineer.getGithub()}/" target="_blank">/${engineer.getGithub()}</a></li>
         </ul>
       </div>
-    `
-    allEngineersData.push(html)
+    `;
+    allEngineersData.push(html);
   });
-  return allEngineersData.join("")
+  return allEngineersData.join("");
 }
 
 function createIntern(data) {
-  const internData = data.filter(intern => ("Intern" === intern.getRole()))
-  const allinternsData = []
-  internData.forEach(intern => {
+  const internData = data.filter((intern) => "Intern" === intern.getRole());
+  const allinternsData = [];
+  internData.forEach((intern) => {
     const html = `
       <div class=" shadow-2xl bg-gray-200">
         <div class="p-4 bg-blue-500 text-white text-2xl px-8">
@@ -56,10 +58,10 @@ function createIntern(data) {
           <li class="p-4 py-2 border-b-2 border-gray-300">School: ${intern.getSchool()}</li>
         </ul>
       </div>
-    `
-    allinternsData.push(html)
+    `;
+    allinternsData.push(html);
   });
-  return allinternsData.join("")
+  return allinternsData.join("");
 }
 
 function generateHtml(data) {
@@ -77,14 +79,14 @@ function generateHtml(data) {
       <h1 class="text-white text-3xl">My Team</h1>
     </section>
   
-    <section id="cardsSection" class="grid md:grid-cols-3 gap-4 p-4 justify-center align-center">
+    <section id="cardsSection" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 justify-center align-center">
       ${createManager(data)}
       ${createEngineer(data)}
       ${createIntern(data)}
     </section>
     <script src="https://kit.fontawesome.com/9f3d832768.js" crossorigin="anonymous"></script>
   </body>
-  </html>`
+  </html>`;
 }
 
-module.exports = generateHtml
+module.exports = generateHtml;
