@@ -5,7 +5,7 @@
 
 The purpose of this project is to create a nodeJS based program that will take the user's input regarding his team member's information, and then generate a styled html file with all the user inputs put in profile cards with the basic contact information of the team members. When the user runs "node index" in his terminal a series of questions will be prompted to the user. The questions are in regard of each team member's basic contact information: name, id, email, and office number, school or github account according to the member's role in the company/project. Each team member inputs will create a new class with his/her relevant information and methods that return this information. The new html file with all the profile cards is stored in the dist folder. Tests have been implemented for all classes and their respective methods. All questions prompted are generated with Inquirer and all tests are ran with Jest. 
 
-GitHub Repository: https://github.com/AndreV96/10_Team_Profile_Generator_AVL.git 
+GitHub Repository: https://github.com/AndreV96/Team_Master
 
 Repository's Functionality Video: https://watch.screencastify.com/v/49CWF8p8v86syxcUrNoZ
 
